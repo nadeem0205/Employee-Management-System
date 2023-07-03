@@ -1,6 +1,7 @@
 from django.db import models
 from employee.models import Employee
 
+
 class Salary(models.Model):
     """
     Model for salary
@@ -13,14 +14,14 @@ class Salary(models.Model):
         allowance(float): Special Allowance of the employee
         net_salary(float): Net Salary of the employee
     """
+
     employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
     basic = models.FloatField()
     hra = models.FloatField()
     pf = models.FloatField()
     esi = models.FloatField()
-    allowance = models.FloatField() 
+    allowance = models.FloatField()
     net_salary = models.FloatField()
 
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} {self.net_salary}"
-    

@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Employee(models.Model):
     """
     Model for Employee
     Atribs:
+        user(obj): User object
         emp_id(int): Employee ID
         frist_name(str): First Name of employee
         last_name(str): Last Name of employee
@@ -12,6 +14,8 @@ class Employee(models.Model):
         phone_number(str): Phone Number of the employee
         Designation(str): Designation of the employee
     """
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     emp_id = models.IntegerField(unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -22,11 +26,10 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-    
+
     def full_name(self):
         """
         Method to give the full name of the Employee
         """
         full_name = f"{self.first_name} {self.last_name}"
         return full_name
-
