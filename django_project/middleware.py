@@ -1,5 +1,6 @@
 import logging
 import time
+from logs.models import APILogEntry
 
 # Create and configure logger
 """
@@ -35,6 +36,7 @@ class APITrackingMiddleware:
         response = self.get_response(request)
         response_time = time.time() - start_time
         status_code = response.status_code
+        response_content = response.content.decode('utf-8')
 
         self.request_count += 1
         if status_code >= 400:
@@ -46,7 +48,17 @@ class APITrackingMiddleware:
         logger.info(f"Method Type: {request.method}")
         logger.info(f"Status Code: {status_code}")
         logger.info(f"Response Time: {response_time:.2f} seconds")
+        # logger.info(f"Response content: {response_content}")
         logger.info(f"Total number of requests : {self.request_count}")
         logger.info(f"Total number of error counts : {self.error_count}\n")
+
+        log_entry = APILogEntry(
+            method=request.method,
+            path=request.path,
+            status_code=status_code,
+            response_time=response_time,
+            response_content=response_content
+        )
+        log_entry.save()
 
         return response

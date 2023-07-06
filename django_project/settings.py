@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "users",
     "salary",
     "leave",
+    "logs",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

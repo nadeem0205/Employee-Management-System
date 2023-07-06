@@ -3,6 +3,17 @@ from employee.models import Employee
 
 
 class Leave(models.Model):
+    """
+    Model for Leave
+    Atribs:
+        employee(obj): Employee object
+        leave_type(str): Type of leave
+        start_date(date): Start date of applied leave
+        end_date(date): End date of applied leave
+        reason(str): Reason for the applied leave
+        is_approved(bool): BooleanField for approval
+        approved_by(obj): Object of appoval employee
+    """
     LEAVE_TYPES = (
         ("casual", "Casual Leave"),
         ("sick", "Sick Leave"),
