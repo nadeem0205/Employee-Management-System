@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django_project import settings
+from employee.models import Employee
 
 
 def send_leave_notification_mail(leave):
@@ -12,15 +13,19 @@ def send_leave_notification_mail(leave):
 
     Returns: None
     """
+    employees = Employee.objects.all()
     subject = "Leave Request Notification"
     message = (
         f"Employee {leave.employee.full_name()} has requested a leave.\n"
         f"Leave details : \n{leave.leave_details()}"
     )
     from_email = settings.DEFAULT_FROM_EMAIL
-    to_emails = ["nadeemmuhammad.work@gmail.com"]
+    to_emails = [
+        employee.email
+        for employee in employees
+        if employee.designation == "HR"
+    ]
     # mail ids of HR designated employees
-    print(from_email)
     send_mail(subject, message, from_email, to_emails)
 
 

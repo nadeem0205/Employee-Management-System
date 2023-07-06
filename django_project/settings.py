@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django_project.middleware.APITrackingMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -144,5 +145,17 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = config.get("email", "DEFAULT_FROM_EMAIL")
 
-# print(EMAIL_HOST_USER)
-# print(EMAIL_HOST_PASSWORD)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}

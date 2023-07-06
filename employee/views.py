@@ -18,9 +18,7 @@ class EmployeeListView(ListView):
         """
         Overriding the get method.
         """
-        print(request.user)
         employees = self.get_queryset()
-        print(employees)
         data = [
             {
                 "id": employee.id,
@@ -64,8 +62,6 @@ class EmployeeCreateView(LoginRequiredMixin, CreateView):
         Overriding the post method.
         """
         data = json.loads(request.body)
-        print(request.user)
-        print(data)
 
         employee = Employee(
             user=request.user,
@@ -168,7 +164,6 @@ class EmployeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         Overriding the delete method.
         """
         self.pk = self.kwargs.get(self.pk_url_kwarg)
-        print(self.pk)
         try:
             employee = self.model.objects.get(pk=self.pk)
             employee.delete()
